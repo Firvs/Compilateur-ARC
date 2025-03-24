@@ -1,0 +1,143 @@
+## Introduction
+
+Le projet ARC consiste à construire un compilateur capable de traduire un langage pseudo-algorithmique vers le langage machine RAM.
+ Ce projet a pour objectif de permettre l'exécution de programmes écrits en pseudo-code sur une architecture RAM, 
+ offrant ainsi une vue pratique et didactique de la compilation et de l'exécution des programmes.
+
+## Structure et Fonctionnement du Programme
+
+Le programme est développé en utilisant Flex, Bison et le langage C. Il fonctionne selon un enchaînement simple d'étapes :
+
+1. **Analyse lexicale** : Identification des mots-clés, opérateurs et identificateurs dans le code source.
+2. **Analyse syntaxique** : Vérification de la structure grammaticale du code et construction de l'arbre syntaxique abstrait (AST).
+3. **Table des symboles** : Remplissage de la table des symboles avec les informations sur les variables, fonctions, et autres éléments déclarés dans le programme.
+4. **Génération de code** : Production des instructions RAM correspondant au programme pseudo-algorithmique.
+
+Cependant, le compilateur ne prend pas en charge la génération de code pour les fonctions. Il se limite à l'analyse syntaxique et lexicale des fonctions sans produire les instructions RAM correspondantes.
+
+Ces différentes étapes sont coordonnées pour traduire efficacement le pseudo-code en code machine RAM. L'architecture modulaire facilite les ajouts et modifications futures.
+
+## Structure de la Mémoire
+
+La structure mémoire utilisée dans la machine RAM est organisée comme suit :
+
+1. **Adresse 0** : Réservée pour l'accumulateur (**ACC**), qui sert aux opérations arithmétiques et logiques.
+2. **Adresse 1** : Utilisée comme registre temporaire (**TMP**) pour stocker des valeurs intermédiaires.
+3. **Mémoire statique** : Réservée pour les variables globales du programme, allouées de manière fixe.
+4. **Pile** : Utilisée pour gérer les données temporaires, telles que les résultats intermédiaires des calculs ou les valeurs échangées entre instructions.
+5. **Espace libre** : Situé après la pile, il reste disponible pour des extensions ou des allocations futures si nécessaire.
+
+Voici une représentation schématique de cette organisation mémoire :
+
+```
+┌───────────────────┐ <── 0
+│        ACC        │
+├───────────────────┤ <── 1
+│                   │
+│         TMP       │
+│                   │
+├───────────────────┤ 
+│                   │
+│ Mémoire statique  │ <-- mémoires pour les variables 
+│                   │
+├───────────────────┤
+│                   │
+│                   │
+│        Pile       │
+│                   │
+│                   │
+│                   │
+│                   │
+├───────────────────┤
+│                   │
+│                   │
+│    Espace libre   │
+│                   │
+│                   │
+└───────────────────┘
+```
+
+Cette organisation simple et hiérarchique permet une gestion efficace des ressources mémoire, tout en assurant une bonne séparation entre les différentes zones.
+
+## Caractéristiques du Compilateur et du Langage Reconnu
+
+### Fonctionnalités prises en charge
+- **Opérations arithmétiques et logiques** : Le compilateur prend en charge les opérations telles que l'addition, la soustraction, les comparaisons, et les opérations booléennes.
+- **Structures de contrôle** : Gestion des boucles "Tant que" et des conditions "Si...Sinon".
+- **Analyse syntaxique et lexicale** : Validation de la structure et des composants du code source.
+
+### Limitations
+- **Gestion des fonctions** : Le compilateur analyse syntaxiquement les fonctions, mais il ne génère pas de code RAM pour celles-ci et l'appel de fonctions .
+- **Précision des erreurs** : Les erreurs syntaxiques et lexicales sont signalées sans grande précision, ce qui peut compliquer leur correction.
+- **Gestion avancée de la mémoire** : L'allocation de la mémoire est simplifiée et manuelle, sans mécanismes automatiques.
+
+Cette combinaison de fonctionnalités permet de couvrir les besoins de base pour exécuter des programmes pseudo-algorithmiques tout en mettant en lumière les aspects fondamentaux de la compilation.
+
+## Mots-Clés et Grammaire
+
+### Mots-Clés Reconnaissables
+Le compilateur reconnaît les mots-clés suivants :
+- **Déclarations** : `VAR` ID, `FCT` fonctions 
+- **Contrôle de flux** : `SI`, `SINON`,`FSI`,`ALORS` ,`TQ`, `FTQ` ,`FAIRE` 
+- **Opérateurs logiques** : `ET`, `OU`, `NON`
+- **Opérations booléennes** : `VRAI`, `FAUX`
+- **AFFICHAGE** : `PRINT x ;`
+- **Affectations et expressions** : `<-`, `+`, `-`, `*`, `/` ,`%`,`<=`, `>=`, `!=` {DIFFERENTS} , `>` , `<` , `==`{ EGAL } 
+
+### Grammaire
+La grammaire définie pour le compilateur suit les règles suivantes :
+1. Un programme PRINCIPALE est composé  des fonctions suivies de déclarations + instructions  et de 
+PROGRAMME MAIN suivi de déclarations de variables globales + instructions .
+2. Les instructions incluent :
+   - Affectations (ex. ` <- 5`)
+   - Conditions (ex. `SI x > 0 ALORS ... FSI`)
+   - Boucles (ex. `TQ x < 10 FAIRE ... FTQ`)
+3. Les expressions peuvent inclure des combinaisons d'opérateurs arithmétiques et logiques.
+
+
+
+########## 
+
+PROGRAMME: 
+
+FONCTION:
+|FCT ID 
+  DECLA_FCT 
+  DEBUT 
+    LIST_INST
+  FIN
+
+                 
+MAIN'('')' 
+DECLA 
+DEBUT 
+  LIST_INST 
+FIN 
+
+
+### Exemples de Syntaxe Valide
+```
+FCT test(a,b,)
+VAR k;
+DEBUT
+    k<- a + b;
+FIN
+
+
+
+MAIN()
+VAR toto;
+DEBUT 
+    toto <- VRAI OU (FAUX ET (2 < 5));
+    PRINT toto;
+FIN
+
+```
+
+#### EXECUCTION DU PROJET ARC ###
+
+make 
+
+./bin/arc test/exemple.algo
+
+code ram dans : out.ram

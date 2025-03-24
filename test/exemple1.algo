@@ -1,0 +1,26 @@
+//Exemple pour les booleens
+
+
+
+MAIN()
+
+VAR toto ;
+VAR Bob ; 
+VAR Alice ;
+
+DEBUT 
+	
+	// valeur toto = 1
+	toto <- ( 1 < 2 ) OU ( 1+62*68/5 ) ;  
+	PRINT toto;
+
+	// valeur Bob = 1
+	Bob <- ( VRAI OU FAUX ) OU (FAUX ET FAUX);  
+	PRINT Bob;
+
+	//valeur Alice = 0
+	Alice <- ( NON VRAI) ;
+	PRINT Alice ;
+
+	
+FIN

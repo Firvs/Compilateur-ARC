@@ -1,0 +1,34 @@
+//Test de fonction
+
+FCT add(a,b,)
+VAR a;
+VAR b;
+VAR c;
+DEBUT
+	a <- 1;
+	b <- 2;
+	c <- a + b;
+	PRINT C;
+FIN
+
+
+//Exemple de deux boucles imbriqués pour afficher un compte à rebours(10 à 0)
+MAIN()
+
+VAR i;
+VAR j;
+VAR k;
+
+DEBUT
+	i <- 5;
+	j <- 10;
+	k <- 1;
+	TQ i >= 0  FAIRE
+		TQ j > 5 FAIRE
+			PRINT j;
+			j <- j - k;
+		FTQ
+		PRINT i;
+		i <- i - k;
+	FTQ
+FIN

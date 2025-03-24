@@ -1,0 +1,27 @@
+
+
+//test SI SINON dans une boucle TQ
+
+MAIN()
+
+VAR i ;
+VAR j ; 
+
+DEBUT
+   
+   i <- 0 ; 
+
+   TQ i < 5 FAIRE 
+
+      i<- i + 1 ; 
+      SI j > 1 ALORS 
+         PRINT 100; 
+      SINON 
+         PRINT 200;
+      FSI
+
+   FTQ
+
+   
+
+FIN
